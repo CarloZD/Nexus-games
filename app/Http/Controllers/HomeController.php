@@ -32,6 +32,9 @@ class HomeController extends Controller
     /**
      * Mostrar juegos por categoría
      */
+    /**
+ * Mostrar juegos por categoría
+ */
     public function category($slug, Request $request)
     {
         // Buscar la categoría por slug
@@ -42,9 +45,9 @@ class HomeController extends Controller
         }
         
         // Query base para juegos de esa categoría
-        $query = Game::with('category')->where('category_id', $category->id);
+        $query = Game::with('category')->where('category_id', $category->id)->where('is_active', true);
         
-        // Aplicar ordenamiento según el parámetro (opcional por ahora)
+        // Aplicar ordenamiento según el parámetro
         $sort = $request->get('sort', 'popular');
         switch ($sort) {
             case 'price_asc':
@@ -66,7 +69,7 @@ class HomeController extends Controller
         // Traer todas las categorías para el menú
         $categories = GameCategory::all();
         
-        return view('games.by-category', compact('category', 'games', 'categories'));
+        return view('games.by-category', compact('category', 'games', 'categories', 'sort'));
     }
 
     /**

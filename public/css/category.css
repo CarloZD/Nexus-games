@@ -336,3 +336,24 @@ body {
         gap: 10px;
     }
 }
+
+/* Indicador de ordenamiento activo */
+.sort-btn.active {
+    background: #5a4fcf;
+    border-color: #5a4fcf;
+    font-weight: bold;
+}
+
+.sort-btn.active::before {
+    content: "✓ ";
+    margin-right: 5px;
+}
+
+/* Animación suave */
+.games-grid {
+    transition: opacity 0.3s ease;
+}
+
+.games-grid.loading {
+    opacity: 0.7;
+}

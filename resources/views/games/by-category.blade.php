@@ -61,13 +61,25 @@
             <div class="results-count">
                 {{ $games->count() }} {{ $games->count() == 1 ? 'juego encontrado' : 'juegos encontrados' }}
             </div>
-            <div class="sort-options">
-                <span>Ordenar por:</span>
-                <a href="#" class="sort-btn active">Populares</a>
-                <a href="#" class="sort-btn">Precio: Menor a Mayor</a>
-                <a href="#" class="sort-btn">Precio: Mayor a Menor</a>
-                <a href="#" class="sort-btn">Más Recientes</a>
-            </div>
+                <div class="sort-options">
+                    <span>Ordenar por:</span>
+                    <a href="{{ route('category.show', ['slug' => $category->slug, 'sort' => 'popular']) }}" 
+                    class="sort-btn {{ ($sort ?? 'popular') == 'popular' ? 'active' : '' }}">
+                        Populares
+                    </a>
+                    <a href="{{ route('category.show', ['slug' => $category->slug, 'sort' => 'price_asc']) }}" 
+                    class="sort-btn {{ ($sort ?? '') == 'price_asc' ? 'active' : '' }}">
+                        Precio: Menor a Mayor
+                    </a>
+                    <a href="{{ route('category.show', ['slug' => $category->slug, 'sort' => 'price_desc']) }}" 
+                    class="sort-btn {{ ($sort ?? '') == 'price_desc' ? 'active' : '' }}">
+                        Precio: Mayor a Menor
+                    </a>
+                    <a href="{{ route('category.show', ['slug' => $category->slug, 'sort' => 'newest']) }}" 
+                    class="sort-btn {{ ($sort ?? '') == 'newest' ? 'active' : '' }}">
+                        Más Recientes
+                    </a>
+                </div>
         </div>
 
         <!-- Grid de Juegos -->
@@ -123,5 +135,19 @@
             alert('Función de carrito en desarrollo para el juego ID: ' + gameId);
         }
     </script>
+        <script>
+            // Efecto de carga suave al cambiar ordenamiento
+            document.querySelectorAll('.sort-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    document.querySelector('.games-grid').classList.add('loading');
+                });
+            });
+
+            // Mostrar contador actualizado
+            const gamesCount = {{ $games->count() }};
+            const sortType = '{{ $sort ?? "popular" }}';
+
+            console.log(`Mostrando ${gamesCount} juegos ordenados por: ${sortType}`);
+        </script>
 </body>
 </html>

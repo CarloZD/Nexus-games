@@ -148,6 +148,7 @@
                 </div>
 
                 <!-- Juegos Relacionados -->
+<!-- Juegos Relacionados -->
                 <div class="related-games">
                     <h3>Juegos Relacionados</h3>
                     <div class="related-grid">
@@ -155,8 +156,10 @@
                             @foreach($relatedGames->take(4) as $related)
                                 <a href="{{ route('game.show', $related->slug) }}" class="related-item">
                                     <img src="{{ asset($related->image_url) }}" alt="{{ $related->title }}" class="related-image">
-                                    <div class="related-title">{{ $related->title }}</div>
-                                    <div class="related-price">S/ {{ number_format($related->price, 2) }}</div>
+                                    <div class="related-info">
+                                        <div class="related-title">{{ $related->title }}</div>
+                                        <div class="related-price">S/ {{ number_format($related->price, 2) }}</div>
+                                    </div>
                                 </a>
                             @endforeach
                         @else
