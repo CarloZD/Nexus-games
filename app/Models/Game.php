@@ -23,7 +23,6 @@ class Game extends Model
         'system_requirements',
         'age_rating',
         'is_active',
-        'stock',
         'category_id',
     ];
 
@@ -84,10 +83,6 @@ class Game extends Model
         return $query->where('is_active', true);
     }
 
-    public function scopeInStock($query)
-    {
-        return $query->where('stock', '>', 0);
-    }
 
     public function scopeByCategory($query, $categoryId)
     {
@@ -105,13 +100,40 @@ class Game extends Model
         return $this->reviews()->count();
     }
 
-    public function isInStock()
-    {
-        return $this->stock > 0;
-    }
-
-    public function getFormattedPrice()
+    public function getFormattedPrice() 
     {
         return 'S/ ' . number_format($this->price, 2);
+    }
+
+    // NUEVOS MÉTODOS para filtros de edad
+    public function canBeAccessedByAge($userAge)
+    {
+        $ageRestrictions = [
+            'E' => 0,      // Para todos
+            'E10+' => 10,  // 10 años o más
+            'T' => 13,     // Adolescentes
+            'M' => 17,     // Maduro
+            'AO' => 18     // Solo adultos
+        ];
+
+        return $userAge >= ($ageRestrictions[$this->age_rating] ?? 0);
+    }
+
+    // Verificar si un usuario puede ver este juego
+    public function isVisibleToUser($user = null)
+    {
+        // Si no está activo, solo los admins pueden verlo
+        if (!$this->is_active) {
+            return $user && $user->isAdmin();
+        }
+
+        // Si no hay usuario logueado, solo mostrar juegos E
+        if (!$user) {
+            return $this->age_rating === 'E';
+        }
+
+        // Verificar restricción de edad (asumir que el usuario tiene una edad)
+        $userAge = $user->age ?? 18; // Default 18 si no tiene edad configurada
+        return $this->canBeAccessedByAge($userAge);
     }
 }

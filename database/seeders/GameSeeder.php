@@ -27,13 +27,13 @@ class GameSeeder extends Seeder
                 'developer' => 'Infinity Ward',
                 'publisher' => 'Activision',
                 'release_date' => '2023-11-10',
-                'image_url' => 'images\games\covers\call-of-duty-mw3.jpg',
+                'image_url' => 'images/games/covers/call-of-duty-mw3.jpg',
                 'screenshots' => [
-                    'screenshots/cod-mw3-1.jpg', 
-                    'screenshots/cod-mw3-2.jpg', 
-                    'screenshots/cod-mw3-3.jpg',
-                    'screenshots/cod-mw3-4.jpg',
-                    'screenshots/cod-mw3-5.jpg'
+                    'images/games/screenshots/cod-mw3-1.jpg', 
+                    'images/games/screenshots/cod-mw3-2.jpg', 
+                    'images/games/screenshots/cod-mw3-3.jpg',
+                    'images/games/screenshots/cod-mw3-4.jpg',
+                    'images/games/screenshots/cod-mw3-5.jpg'
                 ],
                 'system_requirements' => [
                     'minimum' => [
@@ -52,7 +52,7 @@ class GameSeeder extends Seeder
                     ]
                 ],
                 'age_rating' => 'M',
-                'stock' => 50,
+                'is_active' => true,
                 'category_id' => $accion->id,
             ],
             [
@@ -65,11 +65,11 @@ class GameSeeder extends Seeder
                 'release_date' => '2020-12-10',
                 'image_url' => 'images/games/covers/cyberpunk-2077.jpg',
                 'screenshots' => [
-                    'screenshots/cyberpunk-1.jpg', 
-                    'screenshots/cyberpunk-2.jpg',
-                    'screenshots/cyberpunk-3.jpg',
-                    'screenshots/cyberpunk-4.jpg',
-                    'screenshots/cyberpunk-5.jpg'
+                    'images/games/screenshots/cyberpunk-1.jpg', 
+                    'images/games/screenshots/cyberpunk-2.jpg',
+                    'images/games/screenshots/cyberpunk-3.jpg',
+                    'images/games/screenshots/cyberpunk-4.jpg',
+                    'images/games/screenshots/cyberpunk-5.jpg'
                 ],
                 'system_requirements' => [
                     'minimum' => [
@@ -81,7 +81,7 @@ class GameSeeder extends Seeder
                     ]
                 ],
                 'age_rating' => 'M',
-                'stock' => 30,
+                'is_active' => true,
                 'category_id' => $accion->id,
             ],
 
@@ -94,13 +94,13 @@ class GameSeeder extends Seeder
                 'developer' => 'Nintendo EPD',
                 'publisher' => 'Nintendo',
                 'release_date' => '2023-05-12',
-                'image_url' => 'games/zelda-totk.jpg',
+                'image_url' => 'images/games/covers/Zelda-tears-of-kingdom.jpg.webp',
                 'screenshots' => [
-                    'screenshots/zelda-totk-1.jpg', 
-                    'screenshots/zelda-totk-2.jpg',
-                    'screenshots/zelda-totk-3.jpg',
-                    'screenshots/zelda-totk-4.jpg',
-                    'screenshots/zelda-totk-5.jpg'
+                    'images/games/screenshots/zelda-totk-1.jpg', 
+                    'images/games/screenshots/zelda-totk-2.jpg',
+                    'images/games/screenshots/zelda-totk-3.jpg',
+                    'images/games/screenshots/zelda-totk-4.jpg',
+                    'images/games/screenshots/zelda-totk-5.jpg'
                 ],
                 'system_requirements' => [
                     'minimum' => [
@@ -109,7 +109,7 @@ class GameSeeder extends Seeder
                     ]
                 ],
                 'age_rating' => 'E10+',
-                'stock' => 25,
+                'is_active' => true,
                 'category_id' => $aventura->id,
             ],
             [
@@ -120,13 +120,13 @@ class GameSeeder extends Seeder
                 'developer' => 'Guerrilla Games',
                 'publisher' => 'Sony Interactive Entertainment',
                 'release_date' => '2022-02-18',
-                'image_url' => 'games/horizon-fw.jpg',
+                'image_url' => 'images/games/covers/Horizon-FW.jpg',
                 'screenshots' => [
-                    'screenshots/horizon-fw-1.jpg', 
-                    'screenshots/horizon-fw-2.jpg',
-                    'screenshots/horizon-fw-3.jpg',
-                    'screenshots/horizon-fw-4.jpg',
-                    'screenshots/horizon-fw-5.jpg'
+                    'images/games/screenshots/horizon-fw-1.jpg', 
+                    'images/games/screenshots/horizon-fw-2.jpg',
+                    'images/games/screenshots/horizon-fw-3.jpg',
+                    'images/games/screenshots/horizon-fw-4.jpg',
+                    'images/games/screenshots/horizon-fw-5.jpg'
                 ],
                 'system_requirements' => [
                     'minimum' => [
@@ -138,7 +138,7 @@ class GameSeeder extends Seeder
                     ]
                 ],
                 'age_rating' => 'T',
-                'stock' => 40,
+                'is_active' => true,
                 'category_id' => $aventura->id,
             ],
 
@@ -151,13 +151,13 @@ class GameSeeder extends Seeder
                 'developer' => 'Unknown Worlds Entertainment',
                 'publisher' => 'Unknown Worlds Entertainment',
                 'release_date' => '2018-01-23',
-                'image_url' => 'games/subnautica.jpg',
+                'image_url' => 'images/games/covers/Subnautica.jpg',
                 'screenshots' => [
-                    'screenshots/subnautica-1.jpg', 
-                    'screenshots/subnautica-2.jpg',
-                    'screenshots/subnautica-3.jpg',
-                    'screenshots/subnautica-4.jpg',
-                    'screenshots/subnautica-5.jpg'
+                    'images/games/screenshots/subnautica-1.jpg', 
+                    'images/games/screenshots/subnautica-2.jpg',
+                    'images/games/screenshots/subnautica-3.jpg',
+                    'images/games/screenshots/subnautica-4.jpg',
+                    'images/games/screenshots/subnautica-5.jpg'
                 ],
                 'system_requirements' => [
                     'minimum' => [
@@ -169,7 +169,7 @@ class GameSeeder extends Seeder
                     ]
                 ],
                 'age_rating' => 'E10+',
-                'stock' => 35,
+                'is_active' => false, // Este aparece como oculto en tu admin panel
                 'category_id' => $supervivencia->id,
             ],
             [
@@ -180,13 +180,13 @@ class GameSeeder extends Seeder
                 'developer' => 'Endnight Games Ltd',
                 'publisher' => 'Endnight Games Ltd',
                 'release_date' => '2018-04-30',
-                'image_url' => 'games/the-forest.jpg',
+                'image_url' => 'images/games/covers/The-forest.jpg',
                 'screenshots' => [
-                    'screenshots/forest-1.jpg', 
-                    'screenshots/forest-2.jpg',
-                    'screenshots/forest-3.jpg',
-                    'screenshots/forest-4.jpg',
-                    'screenshots/forest-5.jpg'
+                    'images/games/screenshots/forest-1.jpg', 
+                    'images/games/screenshots/forest-2.jpg',
+                    'images/games/screenshots/forest-3.jpg',
+                    'images/games/screenshots/forest-4.jpg',
+                    'images/games/screenshots/forest-5.jpg'
                 ],
                 'system_requirements' => [
                     'minimum' => [
@@ -198,7 +198,7 @@ class GameSeeder extends Seeder
                     ]
                 ],
                 'age_rating' => 'M',
-                'stock' => 20,
+                'is_active' => true,
                 'category_id' => $supervivencia->id,
             ],
 
@@ -211,13 +211,13 @@ class GameSeeder extends Seeder
                 'developer' => 'Kinetic Games',
                 'publisher' => 'Kinetic Games',
                 'release_date' => '2020-09-18',
-                'image_url' => 'games/phasmophobia.jpg',
+                'image_url' => 'images/games/covers/Phasmophobia.jpg',
                 'screenshots' => [
-                    'screenshots/phasmophobia-1.jpg', 
-                    'screenshots/phasmophobia-2.jpg',
-                    'screenshots/phasmophobia-3.jpg',
-                    'screenshots/phasmophobia-4.jpg',
-                    'screenshots/phasmophobia-5.jpg'
+                    'images/games/screenshots/phasmophobia-1.jpg', 
+                    'images/games/screenshots/phasmophobia-2.jpg',
+                    'images/games/screenshots/phasmophobia-3.jpg',
+                    'images/games/screenshots/phasmophobia-4.jpg',
+                    'images/games/screenshots/phasmophobia-5.jpg'
                 ],
                 'system_requirements' => [
                     'minimum' => [
@@ -229,7 +229,7 @@ class GameSeeder extends Seeder
                     ]
                 ],
                 'age_rating' => 'T',
-                'stock' => 60,
+                'is_active' => true,
                 'category_id' => $terror->id,
             ],
             [
@@ -240,13 +240,13 @@ class GameSeeder extends Seeder
                 'developer' => 'Capcom',
                 'publisher' => 'Capcom',
                 'release_date' => '2023-03-24',
-                'image_url' => 'games/re4-remake.jpg',
+                'image_url' => 'images/games/covers/Resident_evil.jpg',
                 'screenshots' => [
-                    'screenshots/re4-remake-1.jpg', 
-                    'screenshots/re4-remake-2.jpg',
-                    'screenshots/re4-remake-3.jpg',
-                    'screenshots/re4-remake-4.jpg',
-                    'screenshots/re4-remake-5.jpg'
+                    'images/games/screenshots/re4-remake-1.jpg', 
+                    'images/games/screenshots/re4-remake-2.jpg',
+                    'images/games/screenshots/re4-remake-3.jpg',
+                    'images/games/screenshots/re4-remake-4.jpg',
+                    'images/games/screenshots/re4-remake-5.jpg'
                 ],
                 'system_requirements' => [
                     'minimum' => [
@@ -258,7 +258,7 @@ class GameSeeder extends Seeder
                     ]
                 ],
                 'age_rating' => 'M',
-                'stock' => 45,
+                'is_active' => true,
                 'category_id' => $terror->id,
             ],
 
@@ -271,13 +271,13 @@ class GameSeeder extends Seeder
                 'developer' => 'Relic Entertainment',
                 'publisher' => 'Xbox Game Studios',
                 'release_date' => '2021-10-28',
-                'image_url' => 'games/aoe-iv.jpg',
+                'image_url' => 'images/games/covers/AOE-IV.jpg',
                 'screenshots' => [
-                    'screenshots/aoe-iv-1.jpg', 
-                    'screenshots/aoe-iv-2.jpg',
-                    'screenshots/aoe-iv-3.jpg',
-                    'screenshots/aoe-iv-4.jpg',
-                    'screenshots/aoe-iv-5.jpg'
+                    'images/games/screenshots/aoe-iv-1.jpg', 
+                    'images/games/screenshots/aoe-iv-2.jpg',
+                    'images/games/screenshots/aoe-iv-3.jpg',
+                    'images/games/screenshots/aoe-iv-4.jpg',
+                    'images/games/screenshots/aoe-iv-5.jpg'
                 ],
                 'system_requirements' => [
                     'minimum' => [
@@ -289,7 +289,7 @@ class GameSeeder extends Seeder
                     ]
                 ],
                 'age_rating' => 'T',
-                'stock' => 30,
+                'is_active' => true,
                 'category_id' => $estrategia->id,
             ],
             [
@@ -300,13 +300,13 @@ class GameSeeder extends Seeder
                 'developer' => 'Firaxis Games',
                 'publisher' => '2K Games',
                 'release_date' => '2016-10-21',
-                'image_url' => 'games/civ-vi.jpg',
+                'image_url' => 'images/games/covers/Civilization-VI.jpg',
                 'screenshots' => [
-                    'screenshots/civ-vi-1.jpg', 
-                    'screenshots/civ-vi-2.jpg',
-                    'screenshots/civ-vi-3.jpg',
-                    'screenshots/civ-vi-4.jpg',
-                    'screenshots/civ-vi-5.jpg'
+                    'images/games/screenshots/civ-vi-1.jpg', 
+                    'images/games/screenshots/civ-vi-2.jpg',
+                    'images/games/screenshots/civ-vi-3.jpg',
+                    'images/games/screenshots/civ-vi-4.jpg',
+                    'images/games/screenshots/civ-vi-5.jpg'
                 ],
                 'system_requirements' => [
                     'minimum' => [
@@ -318,7 +318,7 @@ class GameSeeder extends Seeder
                     ]
                 ],
                 'age_rating' => 'E10+',
-                'stock' => 40,
+                'is_active' => true,
                 'category_id' => $estrategia->id,
             ],
         ];

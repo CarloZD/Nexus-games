@@ -43,11 +43,11 @@ class LoginController extends Controller
             // Obtener el usuario autenticado
             $user = Auth::user();
             
-            // Redirigir según el rol
+            // Redirigir según el rol - CORREGIDO
             if ($user->role === 'admin') {
-                return redirect()->intended('admin/dashboard');
+                return redirect()->intended(route('admin.dashboard'));
             } else {
-                return redirect()->intended('dashboard');
+                return redirect()->intended('/'); // ← Usuarios van al home
             }
         }
 
