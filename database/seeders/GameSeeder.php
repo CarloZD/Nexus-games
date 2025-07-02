@@ -27,7 +27,7 @@ class GameSeeder extends Seeder
                 'developer' => 'Infinity Ward',
                 'publisher' => 'Activision',
                 'release_date' => '2023-11-10',
-                'image_url' => 'games/cod-mw3.jpg',
+                'image_url' => 'images\games\covers\call-of-duty-mw3.jpg',
                 'screenshots' => [
                     'screenshots/cod-mw3-1.jpg', 
                     'screenshots/cod-mw3-2.jpg', 
@@ -63,7 +63,7 @@ class GameSeeder extends Seeder
                 'developer' => 'CD Projekt Red',
                 'publisher' => 'CD Projekt',
                 'release_date' => '2020-12-10',
-                'image_url' => 'games/cyberpunk-2077.jpg',
+                'image_url' => 'images/games/covers/cyberpunk-2077.jpg',
                 'screenshots' => [
                     'screenshots/cyberpunk-1.jpg', 
                     'screenshots/cyberpunk-2.jpg',

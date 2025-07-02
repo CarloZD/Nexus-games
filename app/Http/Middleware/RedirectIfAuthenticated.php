@@ -10,28 +10,16 @@ use Symfony\Component\HttpFoundation\Response;
 
 class RedirectIfAuthenticated
 {
-    /**
-     * Handle an incoming request.
-     *
-     * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
-     */
     public function handle(Request $request, Closure $next, string ...$guards): Response
     {
         $guards = empty($guards) ? [null] : $guards;
 
         foreach ($guards as $guard) {
             if (Auth::guard($guard)->check()) {
-                $user = Auth::user();
-                
-                // Redirigir según el rol del usuario
-                if ($user->isAdmin()) {
-                    return redirect('/admin/dashboard');
-                } else {
-                    return redirect('/user/dashboard');
-                }
+                return redirect('/'); 
             }
         }
 
         return $next($request);
     }
-}
+}   

@@ -3,35 +3,38 @@
 use App\Http\Controllers\UserDashboardController;
 use App\Http\Controllers\AdminDashboardController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\HomeController; // IMPORTANTE: Agregar esta línea
 use Illuminate\Support\Facades\Route;
 
-// Ruta principal
-Route::get('/', function () {
-    return view('welcome');
-})->name('home');
+// Ruta principal - Index de la tienda
+Route::get('/', [HomeController::class, 'index'])->name('home');
+
+// Ruta para categorías
+Route::get('/categoria/{slug}', [HomeController::class, 'category'])->name('category.show');
+
+// Ruta para vista individual de juegos
+Route::get('/juego/{slug}', [HomeController::class, 'show'])->name('game.show');
 
 // Incluir rutas de autenticación de Breeze
 require __DIR__.'/auth.php';
 
-// Dashboard según el rol del usuario
+// Dashboard según el rol del usuario - Todos van al index
 Route::get('/dashboard', function () {
-    $user = auth()->user();
-    
-    if ($user->isAdmin()) {
-        return redirect()->route('admin.dashboard');
-    }
-    
-    return redirect()->route('user.dashboard');
+    return redirect('/');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
-// Dashboard para usuarios normales
+// Dashboard para usuarios normales - También al index
 Route::middleware('auth')->group(function () {
-    Route::get('/user/dashboard', [UserDashboardController::class, 'dashboard'])->name('user.dashboard');
+    Route::get('/user/dashboard', function () {
+        return redirect('/');
+    })->name('user.dashboard');
 });
 
-// Dashboard para administradores
+// Dashboard para administradores - También al index (por ahora)
 Route::middleware('auth')->group(function () {
-    Route::get('/admin/dashboard', [AdminDashboardController::class, 'dashboard'])->name('admin.dashboard');
+    Route::get('/admin/dashboard', function () {
+        return redirect('/');
+    })->name('admin.dashboard');
 });
 
 // Rutas de perfil
