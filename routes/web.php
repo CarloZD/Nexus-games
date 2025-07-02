@@ -24,15 +24,14 @@ Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () 
     Route::get('/games', [AdminController::class, 'games'])->name('games');
 });
 
-// Dashboard según el rol del usuario
+// Dashboard principal - redirige según el rol
 Route::middleware('auth')->group(function () {
     Route::get('/dashboard', function () {
         if (auth()->user()->isAdmin()) {
             return redirect()->route('admin.dashboard');
         }
-        return redirect('/'); // Usuarios normales van al home (tienda)
+        return redirect()->route('home'); // Los usuarios van al home
     })->name('dashboard');
-
 });
 
 // Rutas de perfil

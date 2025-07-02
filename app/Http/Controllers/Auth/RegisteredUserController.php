@@ -46,7 +46,7 @@ class RegisteredUserController extends Controller
 
         Auth::login($user);
 
-        // Como es usuario nuevo, siempre será 'user'
-        return redirect('/user/dashboard');
+        // Cambiar esta línea:
+        return redirect()->route('dashboard');
     }
 }

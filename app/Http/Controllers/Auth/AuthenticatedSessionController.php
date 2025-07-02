@@ -33,7 +33,7 @@ class AuthenticatedSessionController extends Controller
         if ($user->isAdmin()) {
             return redirect()->intended(route('admin.dashboard'));
         } else {
-            return redirect()->intended('/');
+            return redirect()->intended(route('home')); // ← Cambiar esta línea
         }
     }
 
