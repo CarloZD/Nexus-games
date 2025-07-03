@@ -39,7 +39,7 @@ body {
 
 /* Left Side - Gaming Image */
 .image-section {
-    background: url('/storage/mando.jpg');
+    background: url('/images/login-register/mando.jpg');
     background-size: cover;
     background-position: center;
     display: flex;

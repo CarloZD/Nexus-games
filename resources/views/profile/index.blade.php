@@ -38,12 +38,12 @@
         <!-- Perfil del Usuario -->
         <div class="user-profile">
             <div class="profile-avatar">
-                @if($user->profile_image)
-                    <img src="{{ asset('storage/' . $user->profile_image) }}" 
-                         alt="Foto de perfil de {{ $user->name }}">
-                @else
-                    {{ strtoupper(substr($user->name, 0, 1)) }}
-                @endif
+                    @if($user->profile_image)
+                        <img src="{{ asset($user->profile_image) }}" 
+                            alt="Foto de perfil de {{ $user->name }}">
+                    @else
+                        {{ strtoupper(substr($user->name, 0, 1)) }}
+                    @endif
                 
                 <!-- Botón de editar -->
                 <a href="{{ route('profile.edit.custom') }}" class="edit-icon" title="Editar perfil">✏️</a>

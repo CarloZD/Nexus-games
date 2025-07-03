@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\File;
 use App\Models\UserLibrary;
 use App\Models\Review;
 use App\Models\Order;
@@ -83,24 +83,30 @@ class UserProfileController extends Controller
             'bio' => $request->bio,
         ];
 
-        // Manejar la subida de imagen
+        // Manejar la subida de imagen - NUEVO MÉTODO
         if ($request->hasFile('profile_image')) {
             // Eliminar imagen anterior si existe
-            if ($user->profile_image && Storage::disk('public')->exists($user->profile_image)) {
-                Storage::disk('public')->delete($user->profile_image);
+            if ($user->profile_image && File::exists(public_path($user->profile_image))) {
+                File::delete(public_path($user->profile_image));
             }
 
-            // Subir nueva imagen
+            // Subir nueva imagen a public/images/profiles/
             $file = $request->file('profile_image');
             
             // Generar nombre único para el archivo
             $fileName = 'profile_' . $user->id . '_' . time() . '.' . $file->getClientOriginalExtension();
             
-            // Guardar en storage/app/public/profiles/
-            $path = $file->storeAs('profiles', $fileName, 'public');
+            // Crear la carpeta si no existe
+            $destinationPath = public_path('images/profiles');
+            if (!File::exists($destinationPath)) {
+                File::makeDirectory($destinationPath, 0755, true);
+            }
             
-            // Agregar la ruta a los datos del usuario
-            $userData['profile_image'] = $path;
+            // Mover archivo a public/images/profiles/
+            $file->move($destinationPath, $fileName);
+            
+            // Guardar la ruta relativa en la base de datos
+            $userData['profile_image'] = 'images/profiles/' . $fileName;
         }
 
         // Actualizar usuario
@@ -116,8 +122,8 @@ class UserProfileController extends Controller
     {
         $user = Auth::user();
         
-        if ($user->profile_image && Storage::disk('public')->exists($user->profile_image)) {
-            return asset('storage/' . $user->profile_image);
+        if ($user->profile_image && File::exists(public_path($user->profile_image))) {
+            return asset($user->profile_image);
         }
         
         return null; // Retorna null si no hay imagen
@@ -130,9 +136,9 @@ class UserProfileController extends Controller
     {
         $user = Auth::user();
         
-        if ($user->profile_image && Storage::disk('public')->exists($user->profile_image)) {
+        if ($user->profile_image && File::exists(public_path($user->profile_image))) {
             // Eliminar archivo
-            Storage::disk('public')->delete($user->profile_image);
+            File::delete(public_path($user->profile_image));
             
             // Limpiar campo en base de datos
             $user->update(['profile_image' => null]);

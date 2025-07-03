@@ -48,7 +48,7 @@
                         <div class="current-photo">
                             <div class="photo-preview" id="photoPreview">
                                 @if($user->profile_image)
-                                    <img src="{{ asset('storage/' . $user->profile_image) }}" alt="Foto de perfil">
+                                    <img src="{{ asset($user->profile_image) }}" alt="Foto de perfil">
                                 @else
                                     {{ strtoupper(substr($user->name, 0, 1)) }}
                                 @endif
