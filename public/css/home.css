@@ -11,9 +11,16 @@ body {
     min-height: 100vh;
 }
 
-/* Header Principal */
+/* ===== HEADER DE DOS NIVELES ===== */
 .main-header {
-    background: rgba(0, 0, 0, 0.8);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+/* Nivel Superior */
+.header-top {
+    background: rgba(0, 0, 0, 0.9);
     padding: 10px 20px;
     display: flex;
     justify-content: space-between;
@@ -21,7 +28,7 @@ body {
     border-bottom: 1px solid #444;
 }
 
-.nav-menu {
+.main-nav {
     display: flex;
     gap: 30px;
 }
@@ -29,10 +36,12 @@ body {
 .nav-item {
     color: #ccc;
     text-decoration: none;
-    padding: 8px 16px;
-    border-radius: 4px;
+    padding: 12px 24px;
+    border-radius: 8px;
     transition: all 0.3s;
-    font-weight: 500;
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 0.95em;
 }
 
 .nav-item:hover, .nav-item.active {
@@ -40,16 +49,22 @@ body {
     color: white;
 }
 
-.user-section {
+.header-top-right {
     display: flex;
     align-items: center;
-    gap: 15px;
+    gap: 20px;
 }
 
 .cart-icon {
     position: relative;
     color: #ccc;
     font-size: 20px;
+    cursor: pointer;
+    transition: color 0.3s;
+}
+
+.cart-icon:hover {
+    color: white;
 }
 
 .cart-count {
@@ -65,16 +80,112 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
+    font-weight: bold;
 }
 
-.logout-btn {
-    background: #e74c3c;
-    color: white;
-    border: none;
+.nexus-logo {
+    background: linear-gradient(45deg, #e74c3c, #c0392b);
     padding: 8px 16px;
-    border-radius: 4px;
-    cursor: pointer;
+    border-radius: 8px;
+    font-weight: bold;
 }
+
+.logo-text {
+    color: white;
+    font-size: 1.2em;
+}
+
+/* Nivel Inferior */
+.header-bottom {
+    background: rgba(0, 0, 0, 0.8);
+    padding: 0 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #333;
+}
+
+.category-nav {
+    display: flex;
+    align-items: center;
+}
+
+.category-btn {
+    color: #ccc;
+    text-decoration: none;
+    padding: 15px 25px;
+    transition: all 0.3s;
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 0.9em;
+    letter-spacing: 0.5px;
+    border-bottom: 3px solid transparent;
+}
+
+.category-btn:hover, .category-btn.active {
+    background: rgba(90, 79, 207, 0.3);
+    color: white;
+    border-bottom-color: #5a4fcf;
+}
+
+/* Header Search - Nivel Inferior */
+.header-search {
+    position: relative;
+}
+
+.search-form-header {
+    display: flex;
+    background: rgba(255, 255, 255, 0.15);
+    border-radius: 6px;
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    transition: all 0.3s;
+}
+
+.search-form-header:focus-within {
+    background: rgba(255, 255, 255, 0.2);
+    border-color: #5a4fcf;
+}
+
+.search-input-header {
+    background: transparent;
+    border: none;
+    color: white;
+    padding: 10px 15px;
+    font-size: 0.9em;
+    width: 180px;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+}
+
+.search-input-header::placeholder {
+    color: rgba(255, 255, 255, 0.7);
+    text-transform: uppercase;
+    font-weight: 600;
+    letter-spacing: 1px;
+}
+
+.search-input-header:focus {
+    outline: none;
+    width: 220px;
+    transition: width 0.3s;
+}
+
+.search-btn-header {
+    background: rgba(255, 255, 255, 0.2);
+    border: none;
+    color: white;
+    padding: 10px 12px;
+    cursor: pointer;
+    transition: all 0.3s;
+    font-size: 1em;
+}
+
+.search-btn-header:hover {
+    background: #5a4fcf;
+}
+
+/* ===== RESTO DEL CSS ORIGINAL ===== */
 
 /* Contenedor Principal */
 .container {
@@ -106,7 +217,7 @@ body {
     flex-wrap: wrap;
 }
 
-.category-btn {
+.category-filters .category-btn {
     background: rgba(255, 255, 255, 0.1);
     border: 1px solid #555;
     color: white;
@@ -115,9 +226,10 @@ body {
     cursor: pointer;
     transition: all 0.3s;
     text-decoration: none;
+    border-bottom: none;
 }
 
-.category-btn:hover, .category-btn.active {
+.category-filters .category-btn:hover, .category-filters .category-btn.active {
     background: #5a4fcf;
     border-color: #5a4fcf;
 }
@@ -422,18 +534,92 @@ body {
 }
 
 /* Responsive */
+@media (max-width: 1024px) {
+    .main-nav {
+        gap: 20px;
+    }
+    
+    .nav-item {
+        padding: 10px 16px;
+        font-size: 0.9em;
+    }
+    
+    .category-btn {
+        padding: 12px 20px;
+        font-size: 0.85em;
+    }
+    
+    .search-input-header {
+        width: 150px;
+    }
+    
+    .search-input-header:focus {
+        width: 180px;
+    }
+}
+
 @media (max-width: 768px) {
+    .header-top {
+        flex-direction: column;
+        gap: 15px;
+        padding: 15px 20px;
+    }
+    
+    .main-nav {
+        gap: 15px;
+    }
+    
+    .nav-item {
+        padding: 8px 12px;
+        font-size: 0.85em;
+    }
+    
+    .header-bottom {
+        flex-direction: column;
+        gap: 15px;
+        padding: 15px 20px;
+    }
+    
+    .category-nav {
+        width: 100%;
+        overflow-x: auto;
+        padding-bottom: 5px;
+    }
+    
+    .category-nav::-webkit-scrollbar {
+        height: 3px;
+    }
+    
+    .category-nav::-webkit-scrollbar-track {
+        background: rgba(255, 255, 255, 0.1);
+    }
+    
+    .category-nav::-webkit-scrollbar-thumb {
+        background: #5a4fcf;
+        border-radius: 2px;
+    }
+    
+    .category-btn {
+        padding: 10px 15px;
+        font-size: 0.8em;
+        white-space: nowrap;
+        flex-shrink: 0;
+    }
+    
+    .search-input-header {
+        width: 200px;
+    }
+    
+    .search-input-header:focus {
+        width: 250px;
+    }
+    
     .hero-carousel-section {
         grid-template-columns: 1fr;
     }
     
     .footer-section {
         grid-template-columns: 1fr;
-    }
-    
-    .nav-menu {
-        flex-direction: column;
-        gap: 10px;
     }
     
     .welcome-section h1 {
@@ -444,11 +630,44 @@ body {
         font-size: 1.5em;
     }
     
-    .category-filters {
-        justify-content: center;
-    }
-    
     .offers-grid {
         grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 480px) {
+    .header-top, .header-bottom {
+        padding: 10px 15px;
+    }
+    
+    .main-nav {
+        gap: 10px;
+    }
+    
+    .nav-item {
+        padding: 6px 10px;
+        font-size: 0.8em;
+    }
+    
+    .category-btn {
+        padding: 8px 12px;
+        font-size: 0.75em;
+    }
+    
+    .search-input-header {
+        width: 150px;
+        font-size: 0.85em;
+    }
+    
+    .search-input-header:focus {
+        width: 180px;
+    }
+    
+    .nexus-logo {
+        padding: 6px 12px;
+    }
+    
+    .logo-text {
+        font-size: 1em;
     }
 }

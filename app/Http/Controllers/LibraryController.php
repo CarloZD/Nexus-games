@@ -29,6 +29,7 @@ class LibraryController extends Controller
             'hours_played' => $libraryGames->sum('hours_played'),
             'favorites' => $libraryGames->where('is_favorite', true)->count(),
             'completed' => $libraryGames->where('status', 'completed')->count(),
+            'playing' => $libraryGames->where('status', 'playing')->count(),
         ];
         
         return view('library.index', compact('user', 'libraryGames', 'stats'));

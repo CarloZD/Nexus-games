@@ -54,3 +54,11 @@ Route::middleware('auth')->group(function () {
 Route::middleware('auth')->group(function () {
     Route::get('/biblioteca', [LibraryController::class, 'index'])->name('library.index');
 });
+
+// Helper para detectar ruta activa
+function isActiveRoute($routeName) {
+    return request()->routeIs($routeName) ? 'active' : '';
+}
+// Rutas de búsqueda
+Route::get('/buscar', [HomeController::class, 'search'])->name('search');
+Route::get('/api/autocomplete', [HomeController::class, 'autocomplete'])->name('autocomplete');

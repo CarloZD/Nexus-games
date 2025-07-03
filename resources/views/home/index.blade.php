@@ -7,30 +7,28 @@
     <link rel="stylesheet" href="{{ asset('css/home.css') }}">
 </head>
 <body>
-    <!-- Header Principal -->
+    <!-- Header Principal - Dos niveles -->
     <header class="main-header">
-        <nav class="nav-menu">
-            <a href="{{ route('home') }}" class="nav-item active">TIENDA</a>
-            <a href="{{ route('library.index') }}" class="nav-item">BIBLIOTECA</a> 
-            <a href="#" class="nav-item">COMUNIDAD</a>
-            <a href="{{ route('profile.index') }}" class="nav-item">PERFIL</a> <!-- ← CAMBIAR -->
-        </nav>
-        
-        <div class="user-section">
-            <div class="cart-icon">
-                🛒
-                <span class="cart-count">0</span>
+        <!-- Nivel Superior -->
+        <div class="header-top">
+            <nav class="main-nav">
+                <a href="{{ route('home') }}" class="nav-item active">TIENDA</a>
+                <a href="{{ route('library.index') }}" class="nav-item">BIBLIOTECA</a>
+                <a href="#" class="nav-item">COMUNIDAD</a>
+                <a href="{{ route('profile.index') }}" class="nav-item">PERFIL</a>
+            </nav>
+            
+            <div class="header-top-right">
+                <div class="cart-icon">
+                    🛒
+                    <span class="cart-count">0</span>
+                </div>
+                <div class="nexus-logo">
+                    <span class="logo-text">NEXUS</span>
+                </div>
             </div>
-            @auth
-                <span>{{ auth()->user()->name }}</span>
-                <form method="POST" action="{{ route('logout') }}" style="display: inline;">
-                    @csrf
-                    <button type="submit" class="logout-btn">Cerrar Sesión</button>
-                </form>
-            @else
-                <a href="{{ route('login') }}" class="nav-item">Iniciar Sesión</a>
-            @endauth
         </div>
+        
     </header>
 
     <div class="container">
@@ -53,6 +51,20 @@
                 <a href="/categoria/aventura" class="category-btn">AVENTURA</a>
                 <a href="/categoria/estrategia" class="category-btn">ESTRATEGIA</a>
             @endif
+
+                    <!-- Nivel Inferior -->
+        <div class="header-bottom"> 
+            <div class="header-search">
+                <form action="{{ route('search') }}" method="GET" class="search-form-header">
+                    <input type="text" 
+                           name="q" 
+                           class="search-input-header" 
+                           placeholder="BUSCAR"
+                           autocomplete="off">
+                    <button type="submit" class="search-btn-header">🔍</button>
+                </form>
+            </div>
+        </div>
         </div>
 
         <!-- Hero + Carrusel -->

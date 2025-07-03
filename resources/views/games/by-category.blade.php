@@ -10,12 +10,11 @@
     <!-- Header Principal -->
     <header class="main-header">
         <nav class="nav-menu">
-            <a href="{{ route('home') }}" class="nav-item">TIENDA</a>
+            <a href="{{ route('home') }}" class="nav-item active">TIENDA</a> <!-- ← Mantener TIENDA active en categorías -->
             <a href="{{ route('library.index') }}" class="nav-item">BIBLIOTECA</a>
             <a href="#" class="nav-item">COMUNIDAD</a>
-            <a href="{{ route('profile.index') }}" class="nav-item">PERFIL</a> <!-- ← CAMBIAR -->
+            <a href="{{ route('profile.index') }}" class="nav-item">PERFIL</a>
         </nav>
-        
         <div class="user-section">
             <div class="cart-icon">
                 🛒
