@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 use App\Models\UserLibrary;
 use App\Models\Review;
 use App\Models\Order;
@@ -54,25 +55,91 @@ class UserProfileController extends Controller
     public function edit()
     {
         $user = Auth::user();
-        return view('profile.edit', compact('user'));
+        return view('profile.edit-custom', compact('user'));
     }
 
     public function update(Request $request)
     {
         $user = Auth::user();
         
+        // Validación
         $request->validate([
-            'name' => 'required|string|max:255',
+            'name' => 'required|string|max:255|unique:users,name,' . $user->id,
             'bio' => 'nullable|string|max:500',
-            'profile_image' => 'nullable|string|max:255',
+            'profile_image' => 'nullable|image|mimes:jpeg,jpg,png,webp|max:2048', // 2MB máximo
+        ], [
+            'name.required' => 'El nombre es obligatorio',
+            'name.unique' => 'Este nombre ya está en uso',
+            'name.max' => 'El nombre no puede tener más de 255 caracteres',
+            'bio.max' => 'La biografía no puede tener más de 500 caracteres',
+            'profile_image.image' => 'El archivo debe ser una imagen',
+            'profile_image.mimes' => 'La imagen debe ser JPG, PNG o WEBP',
+            'profile_image.max' => 'La imagen no puede ser mayor a 2MB',
         ]);
 
-        $user->update([
+        // Datos a actualizar
+        $userData = [
             'name' => $request->name,
             'bio' => $request->bio,
-            'profile_image' => $request->profile_image,
-        ]);
+        ];
+
+        // Manejar la subida de imagen
+        if ($request->hasFile('profile_image')) {
+            // Eliminar imagen anterior si existe
+            if ($user->profile_image && Storage::disk('public')->exists($user->profile_image)) {
+                Storage::disk('public')->delete($user->profile_image);
+            }
+
+            // Subir nueva imagen
+            $file = $request->file('profile_image');
+            
+            // Generar nombre único para el archivo
+            $fileName = 'profile_' . $user->id . '_' . time() . '.' . $file->getClientOriginalExtension();
+            
+            // Guardar en storage/app/public/profiles/
+            $path = $file->storeAs('profiles', $fileName, 'public');
+            
+            // Agregar la ruta a los datos del usuario
+            $userData['profile_image'] = $path;
+        }
+
+        // Actualizar usuario
+        $user->update($userData);
 
         return redirect()->route('profile.index')->with('success', '¡Perfil actualizado correctamente!');
+    }
+
+    /**
+     * Método helper para obtener la URL de la foto de perfil
+     */
+    public function getProfileImageUrl()
+    {
+        $user = Auth::user();
+        
+        if ($user->profile_image && Storage::disk('public')->exists($user->profile_image)) {
+            return asset('storage/' . $user->profile_image);
+        }
+        
+        return null; // Retorna null si no hay imagen
+    }
+
+    /**
+     * Método para eliminar foto de perfil
+     */
+    public function removeProfileImage()
+    {
+        $user = Auth::user();
+        
+        if ($user->profile_image && Storage::disk('public')->exists($user->profile_image)) {
+            // Eliminar archivo
+            Storage::disk('public')->delete($user->profile_image);
+            
+            // Limpiar campo en base de datos
+            $user->update(['profile_image' => null]);
+            
+            return redirect()->route('profile.edit.custom')->with('success', 'Foto de perfil eliminada correctamente');
+        }
+        
+        return redirect()->route('profile.edit.custom')->with('error', 'No hay foto de perfil para eliminar');
     }
 }

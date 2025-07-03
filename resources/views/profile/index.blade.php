@@ -13,7 +13,7 @@
             <a href="{{ route('home') }}" class="nav-item">TIENDA</a>
             <a href="{{ route('library.index') }}" class="nav-item">BIBLIOTECA</a>
             <a href="#" class="nav-item">COMUNIDAD</a>
-            <a href="{{ route('profile.index') }}" class="nav-item active">PERFIL</a> <!-- ← SOLO AQUÍ active -->
+            <a href="{{ route('profile.index') }}" class="nav-item active">PERFIL</a>
         </nav>
         
         <div class="user-section">
@@ -28,15 +28,36 @@
     </header>
 
     <div class="container">
+        <!-- Mensaje de éxito -->
+        @if(session('success'))
+            <div class="success-message">
+                {{ session('success') }}
+            </div>
+        @endif
+
         <!-- Perfil del Usuario -->
         <div class="user-profile">
             <div class="profile-avatar">
-                {{ strtoupper(substr($user->name, 0, 1)) }}
-                <div class="edit-icon">✏️</div>
+                @if($user->profile_image)
+                    <img src="{{ asset('storage/' . $user->profile_image) }}" 
+                         alt="Foto de perfil de {{ $user->name }}">
+                @else
+                    {{ strtoupper(substr($user->name, 0, 1)) }}
+                @endif
+                
+                <!-- Botón de editar -->
+                <a href="{{ route('profile.edit.custom') }}" class="edit-icon" title="Editar perfil">✏️</a>
             </div>
             
             <div class="profile-info">
                 <h1 class="username">{{ strtoupper($user->name) }}</h1>
+                
+                <!-- Mostrar biografía si existe -->
+                @if($user->bio)
+                    <p class="user-bio">
+                        "{{ $user->bio }}"
+                    </p>
+                @endif
                 
                 <!-- Botón especial para admin -->
                 @if($user->isAdmin())
@@ -44,6 +65,20 @@
                         🎮 Panel de Administrador
                     </a>
                 @endif
+
+                <!-- BOTONES DE ACCIÓN - EDITAR Y CERRAR SESIÓN -->
+                <div class="profile-actions">
+                    <a href="{{ route('profile.edit.custom') }}" class="edit-profile-btn">
+                        ✏️ Editar Perfil
+                    </a>
+                    
+                    <form method="POST" action="{{ route('logout') }}" style="display: inline;">
+                        @csrf
+                        <button type="submit" class="logout-btn" onclick="return confirm('¿Estás seguro de que quieres cerrar sesión?')">
+                            🚪 Cerrar Sesión
+                        </button>
+                    </form>
+                </div>
             </div>
             
             <div class="library-stats">
@@ -210,12 +245,10 @@
         });
 
         function toggleFavorite(libraryId) {
-            // Aquí iría la lógica AJAX para marcar/desmarcar favorito
             alert('Función de favoritos en desarrollo');
         }
 
         function showGameMenu(libraryId) {
-            // Aquí iría el menú contextual del juego
             alert('Menú del juego en desarrollo');
         }
     </script>

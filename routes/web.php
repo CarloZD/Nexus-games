@@ -43,11 +43,12 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-// NUEVAS RUTAS DE PERFIL PERSONALIZADO ← AGREGAR ESTAS LÍNEAS
+// RUTAS DE PERFIL PERSONALIZADO - ACTUALIZADAS
 Route::middleware('auth')->group(function () {
     Route::get('/mi-perfil', [UserProfileController::class, 'index'])->name('profile.index');
     Route::get('/mi-perfil/editar', [UserProfileController::class, 'edit'])->name('profile.edit.custom');
     Route::patch('/mi-perfil', [UserProfileController::class, 'update'])->name('profile.update.custom');
+    Route::delete('/mi-perfil/foto', [UserProfileController::class, 'removeProfileImage'])->name('profile.remove-image');
 });
 
 // Biblioteca del usuario
@@ -59,6 +60,7 @@ Route::middleware('auth')->group(function () {
 function isActiveRoute($routeName) {
     return request()->routeIs($routeName) ? 'active' : '';
 }
+
 // Rutas de búsqueda
 Route::get('/buscar', [HomeController::class, 'search'])->name('search');
 Route::get('/api/autocomplete', [HomeController::class, 'autocomplete'])->name('autocomplete');
