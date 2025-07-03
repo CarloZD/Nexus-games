@@ -11,9 +11,9 @@
     <header class="main-header">
         <nav class="nav-menu">
             <a href="{{ route('home') }}" class="nav-item active">TIENDA</a>
-            <a href="#" class="nav-item">BIBLIOTECA</a>
+            <a href="{{ route('library.index') }}" class="nav-item">BIBLIOTECA</a> 
             <a href="#" class="nav-item">COMUNIDAD</a>
-            <a href="#" class="nav-item">PERFIL</a>
+            <a href="{{ route('profile.index') }}" class="nav-item">PERFIL</a> <!-- ← CAMBIAR -->
         </nav>
         
         <div class="user-section">

@@ -2,7 +2,9 @@
 use App\Http\Controllers\UserDashboardController;
 use App\Http\Controllers\AdminDashboardController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\UserProfileController; // ← AGREGAR ESTA LÍNEA
 use App\Http\Controllers\HomeController; 
+use App\Http\Controllers\LibraryController;
 use App\Http\Controllers\Admin\AdminController;
 use Illuminate\Support\Facades\Route;
 
@@ -30,16 +32,24 @@ Route::middleware('auth')->group(function () {
         if (auth()->user()->isAdmin()) {
             return redirect()->route('admin.dashboard');
         }
-        return redirect()->route('home'); // Los usuarios van al home
+        return redirect()->route('home');
     })->name('dashboard');
 });
 
-// Rutas de perfil
+// Rutas de perfil Breeze (mantener)
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
+
+// NUEVAS RUTAS DE PERFIL PERSONALIZADO ← AGREGAR ESTAS LÍNEAS
+Route::middleware('auth')->group(function () {
+    Route::get('/mi-perfil', [UserProfileController::class, 'index'])->name('profile.index');
+    Route::get('/mi-perfil/editar', [UserProfileController::class, 'edit'])->name('profile.edit.custom');
+    Route::patch('/mi-perfil', [UserProfileController::class, 'update'])->name('profile.update.custom');
+});
+
 // Biblioteca del usuario
 Route::middleware('auth')->group(function () {
     Route::get('/biblioteca', [LibraryController::class, 'index'])->name('library.index');
