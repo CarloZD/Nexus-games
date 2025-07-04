@@ -2,9 +2,11 @@
 use App\Http\Controllers\UserDashboardController;
 use App\Http\Controllers\AdminDashboardController;
 use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\UserProfileController; // ← AGREGAR ESTA LÍNEA
+use App\Http\Controllers\UserProfileController;
 use App\Http\Controllers\HomeController; 
 use App\Http\Controllers\LibraryController;
+use App\Http\Controllers\PaymentController;
+use App\Http\Controllers\CartController; 
 use App\Http\Controllers\Admin\AdminController;
 use Illuminate\Support\Facades\Route;
 
@@ -43,7 +45,7 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-// RUTAS DE PERFIL PERSONALIZADO - ACTUALIZADAS
+// RUTAS DE PERFIL PERSONALIZADO
 Route::middleware('auth')->group(function () {
     Route::get('/mi-perfil', [UserProfileController::class, 'index'])->name('profile.index');
     Route::get('/mi-perfil/editar', [UserProfileController::class, 'edit'])->name('profile.edit.custom');
@@ -54,6 +56,26 @@ Route::middleware('auth')->group(function () {
 // Biblioteca del usuario
 Route::middleware('auth')->group(function () {
     Route::get('/biblioteca', [LibraryController::class, 'index'])->name('library.index');
+});
+
+// RUTAS DEL CARRITO - AGREGAR ESTAS LÍNEAS
+Route::middleware('auth')->group(function () {
+    Route::get('/carrito', [CartController::class, 'index'])->name('cart.index');
+    Route::post('/carrito/agregar/{game}', [CartController::class, 'add'])->name('cart.add');
+    Route::delete('/carrito/eliminar/{item}', [CartController::class, 'remove'])->name('cart.remove');
+    Route::post('/carrito/limpiar', [CartController::class, 'clear'])->name('cart.clear');
+    Route::get('/carrito/contador', [CartController::class, 'getCount'])->name('cart.count');
+});
+
+// RUTAS DE PAGO
+Route::middleware('auth')->group(function () {
+    Route::get('/pagar/{game}', [PaymentController::class, 'showPaymentForm'])->name('payment.form');
+    Route::post('/procesar-pago', [PaymentController::class, 'processPayment'])->name('payment.process');
+    Route::get('/pago-exitoso/{order}', [PaymentController::class, 'paymentSuccess'])->name('payment.success');
+    
+    // APIs para el frontend
+    Route::get('/api/tarjetas/{bank}', [PaymentController::class, 'getCardsByBank'])->name('api.cards.by-bank');
+    Route::post('/api/verificar-fondos', [PaymentController::class, 'checkCardFunds'])->name('api.check-funds');
 });
 
 // Helper para detectar ruta activa

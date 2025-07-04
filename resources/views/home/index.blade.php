@@ -13,22 +13,60 @@
         <div class="header-top">
             <nav class="main-nav">
                 <a href="{{ route('home') }}" class="nav-item active">TIENDA</a>
-                <a href="{{ route('library.index') }}" class="nav-item">BIBLIOTECA</a>
-                <a href="#" class="nav-item">COMUNIDAD</a>
-                <a href="{{ route('profile.index') }}" class="nav-item">PERFIL</a>
+                @auth
+                    <a href="{{ route('library.index') }}" class="nav-item">BIBLIOTECA</a>
+                    <a href="#" class="nav-item">COMUNIDAD</a>
+                    <a href="{{ route('profile.index') }}" class="nav-item">PERFIL</a>
+                @else
+                    <a href="{{ route('register') }}" class="nav-item">REGISTRARSE</a>
+                    <a href="#" class="nav-item">COMUNIDAD</a>
+                @endauth
             </nav>
             
             <div class="header-top-right">
-                <div class="cart-icon">
-                    🛒
-                    <span class="cart-count">0</span>
-                </div>
+                @auth
+                    <!-- Usuario logueado -->
+                    <a href="{{ route('cart.index') }}" class="cart-icon" title="Ver carrito">
+                        🛒
+                        <span class="cart-count" id="cartCount">
+                            {{ auth()->user()->getActiveCart()->getTotalItems() }}
+                        </span>
+                    </a>
+                    
+                    <span style="color: #ccc;">{{ auth()->user()->name }}</span>
+                    
+                    <form method="POST" action="{{ route('logout') }}" style="display: inline;">
+                        @csrf
+                        <button type="submit" class="logout-btn" style="background: #e74c3c; color: white; border: none; padding: 8px 16px; border-radius: 4px; cursor: pointer;">
+                            Cerrar Sesión
+                        </button>
+                    </form>
+                @else
+                    <!-- Usuario visitante -->
+                    <a href="{{ route('login') }}" class="login-btn" style="background: #27ae60; color: white; padding: 12px 25px; border-radius: 8px; text-decoration: none; font-weight: bold; transition: all 0.3s; text-transform: uppercase;">
+                         Iniciar Sesión
+                    </a>
+                @endauth
+                
                 <div class="nexus-logo">
                     <span class="logo-text">NEXUS</span>
                 </div>
             </div>
         </div>
         
+        <!-- Nivel Inferior -->
+        <div class="header-bottom"> 
+            <div class="header-search">
+                <form action="{{ route('search') }}" method="GET" class="search-form-header">
+                    <input type="text" 
+                        name="q" 
+                        class="search-input-header" 
+                        placeholder="BUSCAR"
+                        autocomplete="off">
+                    <button type="submit" class="search-btn-header">🔍</button>
+                </form>
+            </div>
+        </div>
     </header>
 
     <div class="container">
@@ -157,19 +195,41 @@
             <div class="offers-grid" id="gamesContainer">
                 @if(isset($specialOffers) && $specialOffers->count() > 0)
                     @foreach($specialOffers as $offer)
-                        <a href="{{ route('game.show', $offer->slug) }}" class="offer-link">
-                            <div class="offer-card">
-                                <span class="discount-badge">-{{ rand(20, 50) }}%</span>
+                        <div class="offer-card">
+                            <span class="discount-badge">-{{ rand(20, 50) }}%</span>
+                            <a href="{{ route('game.show', $offer->slug) }}">
                                 <img src="{{ asset($offer->image_url) }}" alt="{{ $offer->title }}" class="offer-image">
-                                <div class="offer-content">
-                                    <h3>{{ $offer->title }}</h3>
-                                    <div class="price-section">
-                                        <span class="original-price">S/ {{ number_format($offer->price * 1.33, 2) }}</span>
-                                        <span class="current-price">S/ {{ number_format($offer->price, 2) }}</span>
-                                    </div>
+                            </a>
+                            <div class="offer-content">
+                                <h3>{{ $offer->title }}</h3>
+                                <div class="price-section">
+                                    <span class="original-price">S/ {{ number_format($offer->price * 1.33, 2) }}</span>
+                                    <span class="current-price">S/ {{ number_format($offer->price, 2) }}</span>
+                                </div>
+                                
+                                <!-- Botones de acción -->
+                                <div class="offer-actions" style="margin-top: 15px; display: flex; gap: 10px;">
+                                    @auth
+                                        @if(auth()->user()->ownsGame($offer->id))
+                                            <a href="{{ route('library.index') }}" class="offer-btn owned">
+                                                ✅ En tu Biblioteca
+                                            </a>
+                                        @else
+                                            <button class="offer-btn cart" onclick="addToCart({{ $offer->id }})" id="cartBtn-{{ $offer->id }}">
+                                                🛒 Carrito
+                                            </button>
+                                            <a href="{{ route('payment.form', $offer->id) }}" class="offer-btn buy">
+                                                💳 Comprar
+                                            </a>
+                                        @endif
+                                    @else
+                                        <a href="{{ route('login') }}" class="offer-btn login">
+                                            🔐 Iniciar Sesión
+                                        </a>
+                                    @endauth
                                 </div>
                             </div>
-                        </a>
+                        </div>
                     @endforeach
                 @else
                     @for($i = 1; $i <= 3; $i++)
@@ -181,6 +241,11 @@
                                 <div class="price-section">
                                     <span class="original-price">S/ 59.99</span>
                                     <span class="current-price">S/ 39.99</span>
+                                </div>
+                                <div class="offer-actions" style="margin-top: 15px;">
+                                    <a href="{{ route('login') }}" class="offer-btn login">
+                                        🔐 Iniciar Sesión
+                                    </a>
                                 </div>
                             </div>
                         </div>

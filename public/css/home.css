@@ -671,3 +671,110 @@ body {
         font-size: 1em;
     }
 }
+.login-btn:hover {
+    background: #219a52 !important;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(39, 174, 96, 0.3);
+}
+
+.logout-btn:hover {
+    background: #c0392b !important;
+}
+
+.cart-icon {
+    position: relative;
+    background: #7c3aed;
+    color: white;
+    padding: 10px;
+    border-radius: 8px;
+    text-decoration: none;
+    transition: all 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2em;
+}
+
+.cart-icon:hover {
+    background: #6d28d9;
+    transform: translateY(-2px);
+}
+
+.cart-count {
+    position: absolute;
+    top: -8px;
+    right: -8px;
+    background: #e74c3c;
+    color: white;
+    border-radius: 50%;
+    width: 22px;
+    height: 22px;
+    font-size: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    transition: transform 0.2s;
+}   
+.offer-actions {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.offer-btn {
+    flex: 1;
+    padding: 8px 12px;
+    border: none;
+    border-radius: 6px;
+    font-size: 0.85em;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s;
+    text-decoration: none;
+    text-align: center;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 36px;
+}
+
+.offer-btn.cart {
+    background: #5a4fcf;
+    color: white;
+}
+
+.offer-btn.cart:hover {
+    background: #4a3fcf;
+}
+
+.offer-btn.buy {
+    background: #27ae60;
+    color: white;
+}
+
+.offer-btn.buy:hover {
+    background: #219a52;
+}
+
+.offer-btn.login {
+    background: #e74c3c;
+    color: white;
+    flex: 1 1 100%;
+}
+
+.offer-btn.login:hover {
+    background: #c0392b;
+}
+
+.offer-btn.owned {
+    background: #27ae60;
+    color: white;
+    flex: 1 1 100%;
+    cursor: default;
+}
+
+.offer-btn:disabled {
+    background: #666;
+    cursor: not-allowed;
+}
