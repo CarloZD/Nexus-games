@@ -51,7 +51,7 @@
             <!-- Página Principal -->
             <div class="sidebar-section">
                 <button class="sidebar-item active" data-filter="all">
-                    🏠 Página principal
+                    Página principal
                 </button>
             </div>
 

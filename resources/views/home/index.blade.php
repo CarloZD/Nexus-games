@@ -53,9 +53,32 @@
                 </div>
             </div>
         </div>
-        
-        <!-- Nivel Inferior -->
-        <div class="header-bottom"> 
+    </header>
+
+    <div class="container">
+        <!-- Sección de Bienvenida -->
+        <div class="welcome-section">
+            <h1>BIENVENIDO A NEXUS, {{ auth()->check() ? strtoupper(auth()->user()->name) : 'VISITANTE' }}</h1>
+        </div>
+
+        <!-- Filtros de Categorías + Buscador en la misma línea -->
+        <div class="category-search-section">
+            <div class="category-filters">
+                <a href="{{ route('home') }}" class="category-btn active">TODOS</a>
+                @if(isset($categories) && $categories->count() > 0)
+                    @foreach($categories as $category)
+                        <a href="{{ route('category.show', $category->slug) }}" class="category-btn">{{ strtoupper($category->name) }}</a>
+                    @endforeach
+                @else
+                    <a href="/categoria/accion" class="category-btn">ACCIÓN</a>
+                    <a href="/categoria/terror" class="category-btn">TERROR</a>
+                    <a href="/categoria/supervivencia" class="category-btn">SUPERVIVENCIA</a>
+                    <a href="/categoria/aventura" class="category-btn">AVENTURA</a>
+                    <a href="/categoria/estrategia" class="category-btn">ESTRATEGIA</a>
+                @endif
+            </div>
+            
+            <!-- Buscador al lado de las categorías -->
             <div class="header-search">
                 <form action="{{ route('search') }}" method="GET" class="search-form-header">
                     <input type="text" 
@@ -67,68 +90,36 @@
                 </form>
             </div>
         </div>
-    </header>
 
-    <div class="container">
-        <!-- Sección de Bienvenida -->
-        <div class="welcome-section">
-            <h1>BIENVENIDO A NEXUS, {{ auth()->check() ? strtoupper(auth()->user()->name) : 'VISITANTE' }}</h1>
-        </div>
-
-        <!-- Filtros de Categorías -->
-        <div class="category-filters">
-            <a href="{{ route('home') }}" class="category-btn active">TODOS</a>
-            @if(isset($categories) && $categories->count() > 0)
-                @foreach($categories as $category)
-                    <a href="{{ route('category.show', $category->slug) }}" class="category-btn">{{ strtoupper($category->name) }}</a>
-                @endforeach
-            @else
-                <a href="/categoria/accion" class="category-btn">ACCIÓN</a>
-                <a href="/categoria/terror" class="category-btn">TERROR</a>
-                <a href="/categoria/supervivencia" class="category-btn">SUPERVIVENCIA</a>
-                <a href="/categoria/aventura" class="category-btn">AVENTURA</a>
-                <a href="/categoria/estrategia" class="category-btn">ESTRATEGIA</a>
-            @endif
-
-                    <!-- Nivel Inferior -->
-        <div class="header-bottom"> 
-            <div class="header-search">
-                <form action="{{ route('search') }}" method="GET" class="search-form-header">
-                    <input type="text" 
-                           name="q" 
-                           class="search-input-header" 
-                           placeholder="BUSCAR"
-                           autocomplete="off">
-                    <button type="submit" class="search-btn-header">🔍</button>
-                </form>
-            </div>
-        </div>
-        </div>
-
-        <!-- Hero + Carrusel -->
+        <!-- Hero + Carrusel MODIFICADO -->
         <div class="hero-carousel-section">
             <!-- Juegos Destacados (Navegables) -->
             <div class="hero-game">
                 @if(isset($carouselGames) && $carouselGames->count() > 0)
                     @foreach($carouselGames->take(5) as $index => $game)
                         <div class="hero-slide {{ $index === 0 ? 'active' : '' }}" data-slide="{{ $index }}">
-                            <img src="{{ asset($game->image_url) }}" alt="{{ $game->title }}" class="hero-image">
-                            <div class="hero-content">
-                                <h2 class="hero-title">{{ strtoupper($game->title) }}</h2>
-                                <p class="hero-description">{{ $game->description }}</p>
-                                <span class="availability-badge">YA DISPONIBLE</span>
-                            </div>
+                            <!-- HACER CLICKEABLE LA IMAGEN COMPLETA -->
+                            <a href="{{ route('game.show', $game->slug) }}" class="hero-link">
+                                <img src="{{ asset($game->image_url) }}" alt="{{ $game->title }}" class="hero-image">
+                                <div class="hero-content">
+                                    <h2 class="hero-title">{{ strtoupper($game->title) }}</h2>
+                                    <p class="hero-description">{{ $game->description }}</p>
+                                    <span class="availability-badge">YA DISPONIBLE</span>
+                                </div>
+                            </a>
                         </div>
                     @endforeach
                 @else
                     @for($i = 0; $i < 5; $i++)
                         <div class="hero-slide {{ $i === 0 ? 'active' : '' }}" data-slide="{{ $i }}">
-                            <img src="https://picsum.photos/800/400?random={{ $i + 20 }}" alt="Juego Destacado {{ $i + 1 }}" class="hero-image">
-                            <div class="hero-content">
-                                <h2 class="hero-title">JUEGO DESTACADO {{ $i + 1 }}</h2>
-                                <p class="hero-description">Descubre los mejores juegos en Nexus</p>
-                                <span class="availability-badge">YA DISPONIBLE</span>
-                            </div>
+                            <a href="#" class="hero-link">
+                                <img src="https://picsum.photos/800/400?random={{ $i + 20 }}" alt="Juego Destacado {{ $i + 1 }}" class="hero-image">
+                                <div class="hero-content">
+                                    <h2 class="hero-title">JUEGO DESTACADO {{ $i + 1 }}</h2>
+                                    <p class="hero-description">Descubre los mejores juegos en Nexus</p>
+                                    <span class="availability-badge">YA DISPONIBLE</span>
+                                </div>
+                            </a>
                         </div>
                     @endfor
                 @endif
@@ -145,7 +136,7 @@
                 </div>
             </div>
 
-            <!-- Sección Lateral -->
+            <!-- Sección Lateral MODIFICADA -->
             <div class="carousel-section">
                 <h3 class="game-title-header" id="currentGameTitle">
                     @if(isset($carouselGames) && $carouselGames->count() > 0)
@@ -180,11 +171,7 @@
                             S/ 59.99
                         @endif
                     </div>
-                    @auth
-                        <button class="add-to-cart-hero">Agregar al Carrito</button>
-                    @else
-                        <a href="{{ route('login') }}" class="add-to-cart-hero">Iniciar Sesión</a>
-                    @endauth
+                    <!-- BOTÓN ELIMINADO -->
                 </div>
             </div>
         </div>
@@ -212,19 +199,12 @@
                                     @auth
                                         @if(auth()->user()->ownsGame($offer->id))
                                             <a href="{{ route('library.index') }}" class="offer-btn owned">
-                                                ✅ En tu Biblioteca
-                                            </a>
-                                        @else
-                                            <button class="offer-btn cart" onclick="addToCart({{ $offer->id }})" id="cartBtn-{{ $offer->id }}">
-                                                🛒 Carrito
-                                            </button>
-                                            <a href="{{ route('payment.form', $offer->id) }}" class="offer-btn buy">
-                                                💳 Comprar
+                                                En tu Biblioteca
                                             </a>
                                         @endif
                                     @else
                                         <a href="{{ route('login') }}" class="offer-btn login">
-                                            🔐 Iniciar Sesión
+                                             Iniciar Sesión
                                         </a>
                                     @endauth
                                 </div>
@@ -281,7 +261,7 @@
                     <div class="review-date">Subido hace 2 horas</div>
                     <h4>Cyberpunk 2077: Phantom Liberty</h4>
                     <p>Una expansión que redefine el juego base con una historia cautivadora.</p>
-                </div>
+                    </div>
                 <div class="review-item">
                     <div class="review-date">Subido hace 5 horas</div>
                     <h4>The Witcher 3: Wild Hunt</h4>
@@ -386,6 +366,12 @@
         document.addEventListener('DOMContentLoaded', function() {
             showHeroSlide(0);
         });
+
+        // Función para agregar al carrito (ofertas especiales)
+        function addToCart(gameId) {
+            // Aquí iría la lógica real del carrito
+            alert('Función de carrito en desarrollo para el juego ID: ' + gameId);
+        }
     </script>
 </body>
 </html>
